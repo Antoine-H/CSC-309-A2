@@ -152,6 +152,7 @@
 			dy = -dy;
 		} else if (posY + dy > HEIGHT-paddleH-0.5*rec_WIDTH) {
 			if (paddleX <= posX && posX <= paddleX + paddleW){
+				dx = 8 * ((posX-(paddleX+paddleW/2))/paddleW);
 				dy = -dy;
 			} else{
 				clearInterval(intervalID);

@@ -23,7 +23,7 @@
 		WIDTH = canvas.width();
 		HEIGHT = canvas.height();
 		
-		posX = WIDTH * 0.5;	//Initial X position
+		posX = WIDTH * 0.5; //Initial X position
 		posY = HEIGHT * 0.5; //Initial Y position
 		
 		return setInterval(draw, 15);

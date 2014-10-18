@@ -56,11 +56,19 @@
 	  	rect(posX, posY, rec_WIDTH, rec_HEIGHT); //Draw ball
 	 	rect(paddleX, paddleY, paddleW, paddleH); //Draw paddle
 
+	 	//Allows ball to bounce off walls and paddle.
 	  	if (posX + dx > WIDTH || posX + dx < 0)
 	    		dx = -dx;
-	  	if (posY + dy > HEIGHT || posY + dy < 0)
-	    		dy = -dy;
-	 
+	  	if (posY + dy < 0)
+			dy = -dy;
+		else if (posY + dy > HEIGHT) {
+			if (paddleX <= posX && posX <= paddleX + paddleW){
+				dy = -dy;
+			} else{
+				clearInterval(intervalId);
+			}
+		}
+
 	  	posX += dx;
 	  	posY += dy;
 	}

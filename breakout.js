@@ -1,5 +1,5 @@
 (function(){
-  window.onload = init;
+	window.onload = init;
 	
 	var canvas;
 	var context;
@@ -16,6 +16,7 @@
 	}
 	 
 	function game_init() {
+
 	    canvas = $("#canvas");
 	    context = canvas[0].getContext("2d");
 	    width = canvas.width();
@@ -35,5 +36,5 @@
 	    posX += dx;
 	    posY += dy;
 	}
-	
+
 })();

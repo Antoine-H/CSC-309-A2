@@ -16,7 +16,6 @@
 	}
 	 
 	function game_init() {
-
 	    canvas = $("#canvas");
 	    context = canvas[0].getContext("2d");
 	    width = canvas.width();

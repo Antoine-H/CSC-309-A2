@@ -1,39 +1,55 @@
-(function(){
+(function() {
 	var canvas;
 	var context;
 	var posX;
 	var posY;
-	var width;
-	var height;
-	var dx = 2;
-	var dy = 4;
-
+	var WIDTH;
+	var HEIGHT;
+	var rec_WIDTH = 10;
+	var rec_HEIGHT = 10;
+	var dx = 1;
+	var dy = 2;
+	
 	window.onload = init;
 	
 	function init() {
-	    $("#new_game").bind("click", game_init);
+		$("#new_game").bind("click", game_init);
 	}
-	 
+	
 	function game_init() {
-
-	    canvas = $("#canvas");
-	    context = canvas[0].getContext("2d");
-	    width = canvas.width();
-	    height = canvas.height();
-	    posY = height * 0.5;
-	    posX = width * 0.5;
-
-	    return setInterval(draw, 100);
+		canvas = $("#canvas");
+		context = canvas[0].getContext("2d");
+		
+		WIDTH = canvas.width();
+		HEIGHT = canvas.height();
+		
+		posX = WIDTH * 0.5;	//Initial X position
+		posY = HEIGHT * 0.5; //Initial Y position
+		
+		return setInterval(draw, 15);
 	}
-	 
+	
+	function rect(x, y, w, h) {
+  		context.beginPath();
+  		context.rect(x, y, w, h);
+  		context.closePath();
+  		context.fill();
+	}
+
+	function clear() {
+  		context.clearRect(0, 0, WIDTH, HEIGHT);
+	}
+	
 	function draw() {
-	    context.clearRect(0, 0, height, width);
-	    context.beginPath();
-	    context.rect(posX, posY, 10, 10);
-	    context.closePath();
-	    context.fill();
-	    posX += dx;
-	    posY += dy;
+		clear();
+	  	rect(posX, posY, rec_WIDTH, rec_HEIGHT);
+	 
+	  	if (posX + dx > WIDTH || posX + dx < 0)
+	    		dx = -dx;
+	  	if (posY + dy > HEIGHT || posY + dy < 0)
+	    		dy = -dy;
+	 
+	  	posX += dx;
+	  	posY += dy;
 	}
-
 })();

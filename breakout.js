@@ -15,6 +15,9 @@
 	var paddleY; //Y position of paddle
 	var paddleH = 10; //Height of paddle
 	var paddleW = 100; //Width of paddle
+	
+	var rightDown = false; //Paddle moving right
+	var leftDown = false; //Paddle moving left
 
 	var intervalID; //ID value returned by setInterval
 
@@ -22,6 +25,8 @@
 	
 	function init() {
 		$("#new_game").bind("click", game_init);
+		$(document).keydown(onKeyDown);
+		$(document).keyup(onKeyUp);
 	}
 	
 	function game_init() {
@@ -33,43 +38,75 @@
 		
 		posX = WIDTH * 0.4; //Initial X position
 		posY = HEIGHT * 0.5; //Initial Y position
-
+		
 		paddleX = WIDTH / 2; //Initial X position of paddle
-	  	paddleY = HEIGHT - paddleH; //Initial Y position of paddle
+		paddleY = HEIGHT - paddleH; //Initial Y position of paddle
 		
 		intervalID = setInterval(draw, 15);
 	}
 	
 	function rect(x, y, w, h) {
-  		context.beginPath();
-  		context.rect(x, y, w, h);
-  		context.closePath();
-  		context.fill();
+		context.beginPath();
+		context.rect(x, y, w, h);
+		context.closePath();
+		context.fill();
 	}
 
 	function clear() {
-  		context.clearRect(0, 0, WIDTH, HEIGHT);
+		context.clearRect(0, 0, WIDTH, HEIGHT);
+	}
+	
+	function onKeyDown(event) {//Keyboard Handler
+		if (event.keyCode == 39) {
+			rightDown = true;
+		} else if (event.keyCode == 37) {
+			leftDown = true;
+		}
+	}
+	
+	function onKeyUp(event) {//Keyboard handler
+		if (event.keyCode == 39) {
+			rightDown = false;
+		} else if (event.keyCode == 37) {
+			leftDown = false;
+		}
 	}
 	
 	function draw() {
 		clear();
-	  	rect(posX, posY, rec_WIDTH, rec_HEIGHT); //Draw ball
-	 	rect(paddleX, paddleY, paddleW, paddleH); //Draw paddle
-
-	 	//Allows ball to bounce off walls and paddle.
-	  	if (posX + dx > WIDTH || posX + dx < 0)
-	    		dx = -dx;
-	  	if (posY + dy < 0)
-			dy = -dy;
-		else if (posY + dy > HEIGHT) {
-			if (paddleX <= posX && posX <= paddleX + paddleW){
-				dy = -dy;
-			} else{
-				clearInterval(intervalId);
+		rect(posX, posY, rec_WIDTH, rec_HEIGHT); //Draw ball
+		
+		if (rightDown) {//Move right
+			if (paddleX+paddleW < WIDTH+paddleW) {//Prevents the paddle from moving too far
+				paddleX += 5;
+			}
+		} else if (leftDown) {
+			if (paddleX+paddleW > 0) {
+				paddleX -=5;
 			}
 		}
-
-	  	posX += dx;
-	  	posY += dy;
+		rect(paddleX, paddleY, paddleW, paddleH); //Draw paddle
+		
+		if ((posX + dx) > (WIDTH-10) || (posX + dx) < 0) {
+			dx = -dx;
+		}
+		if ((posY + dy) < 0) {
+			dy = -dy;
+		} else if ((posY + dy) > HEIGHT-paddleH-10) {//Could collide with the paddle
+			if (posX > paddleX && posX < (paddleX + paddleW)) {//Collision with the paddle
+				dy = -dy;
+			} else {//paddle wasnt here
+				if ((posY + dy) < (HEIGHT-5)) { //We know the game os over at this point. This lets the animation runs untill the bottom bar
+					posX += dx;
+					posY += dy;
+				} else { //Game over
+					clearInterval(intervalID);
+				}
+			}
+		}
+		
+		posX += dx;
+		posY += dy;
 	}
+	
 })();

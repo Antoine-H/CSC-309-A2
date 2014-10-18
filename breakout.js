@@ -45,9 +45,9 @@
 	  	rect(posX, posY, rec_WIDTH, rec_HEIGHT);
 	 
 	  	if (posX + dx > WIDTH || posX + dx < 0)
-	    	dx = -dx;
+	    		dx = -dx;
 	  	if (posY + dy > HEIGHT || posY + dy < 0)
-	    	dy = -dy;
+	    		dy = -dy;
 	 
 	  	posX += dx;
 	  	posY += dy;

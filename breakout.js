@@ -1,9 +1,6 @@
 (function(){
-	window.onload = init;
-	
 	var canvas;
 	var context;
-
 	var posX;
 	var posY;
 	var width;
@@ -11,6 +8,8 @@
 	var dx = 2;
 	var dy = 4;
 
+	window.onload = init;
+	
 	function init() {
 	    $("#new_game").bind("click", game_init);
 	}

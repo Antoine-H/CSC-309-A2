@@ -1,15 +1,23 @@
 (function() {
 	var canvas;
 	var context;
-	var posX;
-	var posY;
-	var WIDTH;
-	var HEIGHT;
-	var rec_WIDTH = 10;
-	var rec_HEIGHT = 10;
-	var dx = 1;
-	var dy = 2;
+	var WIDTH; //Canvas width
+	var HEIGHT; //Canvas height
+
+	var posX; //X position of ball
+	var posY; //Y position of ball
+	var rec_WIDTH = 10; //Width of ball
+	var rec_HEIGHT = 10; //Height of ball
+	var dx = 1; //X speed of ball
+	var dy = 2; //Y speed of ball
 	
+	var paddleX; //X position of paddle
+	var paddleY; //Y position of paddle
+	var paddleH = 10; //Height of paddle
+	var paddleW = 100; //Width of paddle
+
+	var intervalID; //ID value returned by setInterval
+
 	window.onload = init;
 	
 	function init() {
@@ -23,10 +31,13 @@
 		WIDTH = canvas.width();
 		HEIGHT = canvas.height();
 		
-		posX = WIDTH * 0.5; //Initial X position
+		posX = WIDTH * 0.4; //Initial X position
 		posY = HEIGHT * 0.5; //Initial Y position
+
+		paddleX = WIDTH / 2; //Initial X position of paddle
+	  	paddleY = HEIGHT - paddleH; //Initial Y position of paddle
 		
-		return setInterval(draw, 15);
+		intervalID = setInterval(draw, 15);
 	}
 	
 	function rect(x, y, w, h) {
@@ -42,8 +53,9 @@
 	
 	function draw() {
 		clear();
-	  	rect(posX, posY, rec_WIDTH, rec_HEIGHT);
-	 
+	  	rect(posX, posY, rec_WIDTH, rec_HEIGHT); //Draw ball
+	 	rect(paddleX, paddleY, paddleW, paddleH); //Draw paddle
+
 	  	if (posX + dx > WIDTH || posX + dx < 0)
 	    		dx = -dx;
 	  	if (posY + dy > HEIGHT || posY + dy < 0)

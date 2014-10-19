@@ -1,18 +1,22 @@
 #canvas {
-    border-style: solid;
-    border-width: medium;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+	border-style: solid;
+	border-width: medium;
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
 }
  
 #new_game {
-    padding-left: 0;
-    padding-right: 0;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+	padding-left: 0;
+	padding-right: 0;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+#scorel {
+	text-align: center
 }

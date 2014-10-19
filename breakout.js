@@ -20,8 +20,8 @@
 	
 	var intervalID; //ID value returned by setInterval
 	
-	var bricks;
-	var rows;
+	var bricks; //Brick array
+	var rows; //Number of rows
 	var cols;
 	var brickW;
 	var brickH;
@@ -31,6 +31,7 @@
 	var paddlecolor = "#ff6357";
 	var background = "#000000";
 	var rowcolor = ["#ff6357", "#ffb757", "#cd7500", "#dddd09", "#00b400", "#00a3da"];
+	var rowscore = [6,5,4,3,2,1];
 	
 	window.onload = init;
 	
@@ -58,7 +59,7 @@
 		intervalID = setInterval(draw, 10);
 	}
 	
-	function bricks_init() {
+	function bricks_init() {//Creates the brick array
 		rows = 6;
 		cols = 5;
 		brickW = (WIDTH/cols) -1;
@@ -99,6 +100,12 @@
 		} else if (event.keyCode == 37) {
 			leftDown = false;
 		}
+	}
+	
+	function update_score(n) {
+		var score = document.getElementById("score").innerHTML;
+		score = parseInt(score) + parseInt(n);
+		document.getElementById("score").innerHTML = score;
 	}
 	
 	function draw() {
@@ -142,6 +149,7 @@
 		if (posY < rows * rowH && row >= 0 && col >= 0 && bricks[row][col] == 1) {
 			dy = -dy;
 			bricks[row][col] = 0;
+			update_score(rowscore[row]);
 		}
 		
 		//Allows ball to bounce off walls and paddle.
@@ -152,7 +160,7 @@
 			dy = -dy;
 		} else if (posY + dy > HEIGHT-paddleH-0.5*rec_WIDTH) {
 			if (paddleX <= posX+paddleW && posX <= paddleX + paddleW){
-				dx = 8 * ((posX-(paddleX+paddleW/2))/paddleW);
+				dx = 8 * ((posX-(paddleX+paddleW/2))/paddleW);//ball bounces right or left
 				dy = -dy;
 			} else{
 				clearInterval(intervalID);
